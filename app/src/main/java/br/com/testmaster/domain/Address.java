@@ -20,6 +20,15 @@ public class Address {
     private String street;
     private String neighborhood;
     private String uf;
+    private Geolocation geolocation;
+
+    public Geolocation getGeolocation() {
+        return geolocation;
+    }
+
+    public void setGeolocation(Geolocation geolocation) {
+        this.geolocation = geolocation;
+    }
 
     public String getCity() {
         return city;

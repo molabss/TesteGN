@@ -5,6 +5,6 @@ package br.com.testmaster.system.conn;
  */
 
 public class EntryPoint {
-    public static final String URI_BASE = "https://testemobile.getninjas.com.br/";
+    public static final String URl_BASE = "https://testemobile.getninjas.com.br/";
     public Links _links;
 }

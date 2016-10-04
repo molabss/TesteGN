@@ -8,6 +8,25 @@ public class Links {
 
     private Self self;
 
+    private Accept accept;
+    private Reject reject;
+
+    public Accept getAccept() {
+        return accept;
+    }
+
+    public void setAccept(Accept accept) {
+        this.accept = accept;
+    }
+
+    public Reject getReject() {
+        return reject;
+    }
+
+    public void setReject(Reject reject) {
+        this.reject = reject;
+    }
+
     public Links() {
     }
 

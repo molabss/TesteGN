@@ -18,6 +18,15 @@ public class User {
 
     private String name;
     private String email;
+    private Embedded _embedded;
+
+    public Embedded get_embedded() {
+        return _embedded;
+    }
+
+    public void set_embedded(Embedded _embedded) {
+        this._embedded = _embedded;
+    }
 
     public String getEmail() {
         return email;
