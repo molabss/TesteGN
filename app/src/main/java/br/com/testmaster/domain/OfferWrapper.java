@@ -1,38 +1,22 @@
 package br.com.testmaster.domain;
 
+import java.util.List;
+
 /**
  * Created by Moisés Santana on 03/10/2016.
  */
 
 public class OfferWrapper {
 
-    private String state;
-    private Embedded _embedded;
+    private List<Offer> offers;
     private Links _links;
 
-    public OfferWrapper() {
+    public List<Offer> getOffers() {
+        return offers;
     }
 
-    public OfferWrapper(String state, Embedded _embedded, Links _links) {
-        this.state = state;
-        this._embedded = _embedded;
-        this._links = _links;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public Embedded get_embedded() {
-        return _embedded;
-    }
-
-    public void set_embedded(Embedded _embedded) {
-        this._embedded = _embedded;
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     public Links get_links() {
