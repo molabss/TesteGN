@@ -13,4 +13,7 @@
     tools:context="br.com.testmaster.view.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+
+
+
 </RelativeLayout>
