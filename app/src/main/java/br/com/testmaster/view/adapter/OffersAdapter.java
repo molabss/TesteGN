@@ -1,4 +1,4 @@
-package br.com.testmaster.view.fragments;
+package br.com.testmaster.view.adapter;
 
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import br.com.testmaster.R;
+import br.com.testmaster.domain.Address;
 import br.com.testmaster.domain.OfferWrapper;
 
 /**
@@ -43,10 +44,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
                             .setAction("Action", null).show();
                 }
             });
-
         }
-
-
     }
 
 
@@ -64,16 +62,15 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
 
     @Override
     public void onBindViewHolder(OffersViewHolder holder, int position) {
-        //Address ad = mOfferWrp.getOffers().get(position).get_embedded().getRequest().get_embedded().getAddress();
-        //holder.item_title.setText(mOfferWrp.getOffers().get(position).get_embedded().getRequest().getTitle());
-        //holder.txtContr.setText(mOfferWrp.getOffers().get(position).get_embedded().getRequest().get_embedded().getUser().getName());
-        //holder.data.setText(mOfferWrp.getOffers().get(position).get_embedded().getRequest().getCreated_at());
-        //holder.local.setText(ad.getNeighborhood() + " - " + ad.getCity());
+        Address ad = mOfferWrp.getOffers().get(position).get_embedded().getRequest().get_embedded().getAddress();
+        holder.item_title.setText(mOfferWrp.getOffers().get(position).get_embedded().getRequest().getTitle());
+        holder.txtContr.setText(mOfferWrp.getOffers().get(position).get_embedded().getRequest().get_embedded().getUser().getName());
+        holder.data.setText(mOfferWrp.getOffers().get(position).get_embedded().getRequest().getCreated_at());
+        holder.local.setText(ad.getNeighborhood() + " - " + ad.getCity());
     }
 
     @Override
     public int getItemCount() {
-        //return mOfferWrp.getOffers().size();
-        return 1;
+        return mOfferWrp.getOffers().size();
     }
 }

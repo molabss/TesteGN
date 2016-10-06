@@ -1,4 +1,4 @@
-package br.com.testmaster.system.conn;
+package br.com.testmaster.system.remote;
 
 /**
  * Created by Moisés Santana on 04/10/2016.

@@ -14,34 +14,9 @@
  *  limitations under the License.
  */
 
-package br.com.testmaster.domain;
+package br.com.testmaster.system.remote;
 
-public class Geolocation {
-
-    private String latitude;
-    private String longitude;
-
-    public Geolocation() {
-    }
-
-    public Geolocation(String latitude, String longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
+public class EntryPoint {
+    public static final String URl_BASE = "https://testemobile.getninjas.com.br/";
+    public Links _links;
 }
