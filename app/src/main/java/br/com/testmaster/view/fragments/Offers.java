@@ -10,38 +10,40 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.testmaster.R;
+import br.com.testmaster.domain.OfferWrapper;
 
 
 public class Offers extends Fragment {
 
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
-    RecyclerView.Adapter adapter;
+    RecyclerView.Adapter mAdapter;
 
     public Offers() {   }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_offers, container, false);
+        // Inflando o layout deste fragment
+        View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
 
-        mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
+
+        //Aqui o new OfferWrapper precisa vir do webservice
+        OffersAdapter adapter = new OffersAdapter(new OfferWrapper());
+
+        mRecyclerView.setAdapter(adapter);
+
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //mAdapter = new NewsAdapter(new String[]{"hello","world","qwert","test","greg","peck"});
-        //mRecyclerView.setAdapter(mAdapter);
-
-        // Inflate the layout for this fragment
-        return v;
+        return rootView;
     }
 
 

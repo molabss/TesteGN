@@ -1,5 +1,6 @@
 package br.com.testmaster.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,10 @@ public class OfferWrapper {
 
     private List<Offer> offers;
     private Links _links;
+
+    public OfferWrapper() {
+        offers = new ArrayList<Offer>();
+    }
 
     public List<Offer> getOffers() {
         return offers;
