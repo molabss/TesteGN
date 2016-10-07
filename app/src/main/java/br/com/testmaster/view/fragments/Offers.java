@@ -78,11 +78,10 @@ public class Offers extends Fragment implements SwipeRefreshLayout.OnRefreshList
         mSwipeRefreshLayout.setRefreshing(false);
 
         mRecyclerView.addOnItemTouchListener(
-            new RecyclerItemClickListener(this.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    startActivity(new Intent(Offers.this.getContext(),OfferDetailActivity.class));
-                    //startActivity(new Intent(SendMoneyActivity.this,ValuePopupActivity.class).putExtra("contact",contactList.get(position)));
+                    startActivity(new Intent(getActivity(),OfferDetailActivity.class).putExtra("offer",offerWrp.getOffers().get(position)));
                 }
             })
         );

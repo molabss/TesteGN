@@ -17,7 +17,7 @@
 package br.com.testmaster.domain;
 
 
-public class LeadDetail extends Detail{
+public class LeadDetail extends Detail {
 
 
 }

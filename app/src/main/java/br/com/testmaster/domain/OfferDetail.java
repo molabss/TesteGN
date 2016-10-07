@@ -19,13 +19,18 @@ package br.com.testmaster.domain;
 public class OfferDetail extends Detail{
 
     private Links _links;
-
-
     public Links get_links() {
         return _links;
     }
-
     public void set_links(Links _links) {
         this._links = _links;
+    }
+
+    @Override
+    public String toString() {
+        return "OfferDetail{" +
+                super.toString()+
+                "_links=" + _links +
+                '}';
     }
 }

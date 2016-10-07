@@ -16,10 +16,13 @@
 
 package br.com.testmaster.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class OfferWrapper {
+public class OfferWrapper implements Parcelable{
 
     private List<Offer> offers;
     private Links _links;
@@ -27,6 +30,36 @@ public class OfferWrapper {
     public OfferWrapper() {
         offers = new ArrayList<Offer>();
     }
+
+    //--------------------------------------------------------------------------------------------
+    protected OfferWrapper(Parcel in) {
+        offers = in.createTypedArrayList(Offer.CREATOR);
+        _links = in.readParcelable(Links.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(offers);
+        dest.writeParcelable(_links, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<OfferWrapper> CREATOR = new Creator<OfferWrapper>() {
+        @Override
+        public OfferWrapper createFromParcel(Parcel in) {
+            return new OfferWrapper(in);
+        }
+
+        @Override
+        public OfferWrapper[] newArray(int size) {
+            return new OfferWrapper[size];
+        }
+    };
+    //--------------------------------------------------------------------------------------------
 
     public List<Offer> getOffers() {
         return offers;

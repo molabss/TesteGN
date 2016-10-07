@@ -16,9 +16,12 @@
 
 package br.com.testmaster.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class LeadWrapper {
+public class LeadWrapper implements Parcelable{
 
     private List<Lead> leads;
     private Links _links;
@@ -30,6 +33,36 @@ public class LeadWrapper {
         this.leads = leads;
         this._links = _links;
     }
+
+    //------------------------------------------------------------------------------------
+    protected LeadWrapper(Parcel in) {
+        leads = in.createTypedArrayList(Lead.CREATOR);
+        _links = in.readParcelable(Links.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(leads);
+        dest.writeParcelable(_links, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<LeadWrapper> CREATOR = new Creator<LeadWrapper>() {
+        @Override
+        public LeadWrapper createFromParcel(Parcel in) {
+            return new LeadWrapper(in);
+        }
+
+        @Override
+        public LeadWrapper[] newArray(int size) {
+            return new LeadWrapper[size];
+        }
+    };
+    //------------------------------------------------------------------------------------
 
     public List<Lead> getLeads() {
         return leads;

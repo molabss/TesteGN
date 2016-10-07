@@ -16,9 +16,40 @@
 
 package br.com.testmaster.domain;
 
-public class Phone {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Phone implements Parcelable{
 
     private String number;
+
+    //--------------------------------------------------------------------------------------------
+    protected Phone(Parcel in) {
+        number = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(number);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Phone> CREATOR = new Creator<Phone>() {
+        @Override
+        public Phone createFromParcel(Parcel in) {
+            return new Phone(in);
+        }
+
+        @Override
+        public Phone[] newArray(int size) {
+            return new Phone[size];
+        }
+    };
+    //--------------------------------------------------------------------------------------------
 
     public String getNumber() {
         return number;

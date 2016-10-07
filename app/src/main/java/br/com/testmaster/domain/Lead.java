@@ -16,7 +16,10 @@
 
 package br.com.testmaster.domain;
 
-public class Lead {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Lead implements Parcelable{
 
     private String created_at;
     private Embedded _embedded;
@@ -30,6 +33,38 @@ public class Lead {
         this._embedded = _embedded;
         this._links = _links;
     }
+
+    //----------------------------------------------------------------------------------------------
+    protected Lead(Parcel in) {
+        created_at = in.readString();
+        _embedded = in.readParcelable(Embedded.class.getClassLoader());
+        _links = in.readParcelable(Links.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(created_at);
+        dest.writeParcelable(_embedded, flags);
+        dest.writeParcelable(_links, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Lead> CREATOR = new Creator<Lead>() {
+        @Override
+        public Lead createFromParcel(Parcel in) {
+            return new Lead(in);
+        }
+
+        @Override
+        public Lead[] newArray(int size) {
+            return new Lead[size];
+        }
+    };
+    //----------------------------------------------------------------------------------------------
 
     public String getCreated_at() {
         return created_at;

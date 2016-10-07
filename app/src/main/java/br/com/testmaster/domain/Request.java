@@ -16,7 +16,10 @@
 
 package br.com.testmaster.domain;
 
-public class Request {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Request implements Parcelable{
 
     private String title;
     private String created_at;
@@ -30,6 +33,38 @@ public class Request {
         this.created_at = created_at;
         this._embedded = _embedded;
     }
+
+    //------------------------------------------------------------------------------------------
+    protected Request(Parcel in) {
+        title = in.readString();
+        created_at = in.readString();
+        _embedded = in.readParcelable(Embedded.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(created_at);
+        dest.writeParcelable(_embedded, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Request> CREATOR = new Creator<Request>() {
+        @Override
+        public Request createFromParcel(Parcel in) {
+            return new Request(in);
+        }
+
+        @Override
+        public Request[] newArray(int size) {
+            return new Request[size];
+        }
+    };
+    //------------------------------------------------------------------------------------------
 
     public String getTitle() {
         return title;

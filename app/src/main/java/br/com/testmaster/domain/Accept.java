@@ -16,9 +16,40 @@
 
 package br.com.testmaster.domain;
 
-public class Accept {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Accept implements Parcelable{
 
     private String href;
+
+    //------------------------------------------------------------------------------------------
+    protected Accept(Parcel in) {
+        href = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(href);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Accept> CREATOR = new Creator<Accept>() {
+        @Override
+        public Accept createFromParcel(Parcel in) {
+            return new Accept(in);
+        }
+
+        @Override
+        public Accept[] newArray(int size) {
+            return new Accept[size];
+        }
+    };
+    //------------------------------------------------------------------------------------------
 
     public String getHref() {
         return href;

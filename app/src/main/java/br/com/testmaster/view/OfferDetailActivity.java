@@ -23,6 +23,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,11 +37,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import br.com.testmaster.R;
+import br.com.testmaster.domain.Geolocation;
+import br.com.testmaster.domain.Offer;
+import br.com.testmaster.domain.OfferDetail;
+import br.com.testmaster.system.remote.AsyncResponse;
+import br.com.testmaster.system.remote.task.GetOfferDetail;
 
-public class OfferDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class OfferDetailActivity extends AppCompatActivity implements OnMapReadyCallback, AsyncResponse {
 
     MapView mapView;
     private GoogleMap mMap;
+    Offer offer;
+    OfferDetail detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +59,11 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        offer = (Offer) getIntent().getParcelableExtra("offer");
 
-        CardView cv = (CardView) findViewById(R.id.card_view);
-
+        GetOfferDetail.Task task = new GetOfferDetail().new Task();
+        task.delegate = this;
+        task.execute(offer.get_links());
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -61,25 +71,37 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void processFinish(Object output) {
+        detail = (OfferDetail)output;
+    }
 
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-
         UiSettings uiSet = mMap.getUiSettings();
         uiSet.setZoomControlsEnabled(true);
         uiSet.setZoomGesturesEnabled(true);
 
-        // Add a marker in Brasil - Av Paulista and move the camera
-        LatLng saoPaulo = new LatLng(-23.5627, -46.6546);
-        mMap.addMarker(new MarkerOptions().position(saoPaulo).title("Marker em São Paulo - Brasil"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(saoPaulo));
+        Geolocation local = detail.get_embedded().getAddress().getGeolocation();
+
+        LatLng latLon = new LatLng(local.getLatitude(), local.getLongitude());
+        //mMap.addMarker(new MarkerOptions().position(saoPaulo));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(saoPaulo));
 
         mMap.addCircle(new CircleOptions()
-                .center(saoPaulo)
-                .radius(10)
-                .strokeColor(Color.BLUE));
+                .center(latLon)
+                .radius(30)
+                .strokeColor(Color.BLUE)
+                .strokeWidth(2f)
+                .fillColor(Color.argb(1, 0, 255, 2))
+                .center(latLon)
+            );
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLon));
         mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
+
     }
+
 }

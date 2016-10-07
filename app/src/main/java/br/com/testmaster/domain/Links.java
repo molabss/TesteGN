@@ -16,13 +16,47 @@
 
 package br.com.testmaster.domain;
 
-public class Links {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Links implements Parcelable{
 
 
     private Self self;
-
     private Accept accept;
     private Reject reject;
+
+    //------------------------------------------------------------------------------------------
+    protected Links(Parcel in) {
+        self = in.readParcelable(Self.class.getClassLoader());
+        accept = in.readParcelable(Accept.class.getClassLoader());
+        reject = in.readParcelable(Reject.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(self, flags);
+        dest.writeParcelable(accept, flags);
+        dest.writeParcelable(reject, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Links> CREATOR = new Creator<Links>() {
+        @Override
+        public Links createFromParcel(Parcel in) {
+            return new Links(in);
+        }
+
+        @Override
+        public Links[] newArray(int size) {
+            return new Links[size];
+        }
+    };
+    //------------------------------------------------------------------------------------------
 
     public Accept getAccept() {
         return accept;
@@ -53,5 +87,14 @@ public class Links {
 
     public void setSelf(Self self) {
         this.self = self;
+    }
+
+    @Override
+    public String toString() {
+        return "Links{" +
+                "self=" + self +
+                ", accept=" + accept +
+                ", reject=" + reject +
+                '}';
     }
 }

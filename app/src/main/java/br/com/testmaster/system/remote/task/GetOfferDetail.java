@@ -16,12 +16,11 @@
 
 package br.com.testmaster.system.remote.task;
 
-import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
-import java.io.IOException;
-
-import br.com.testmaster.domain.OfferWrapper;
+import br.com.testmaster.domain.Links;
+import br.com.testmaster.domain.OfferDetail;
 import br.com.testmaster.system.remote.AsyncResponse;
 import br.com.testmaster.system.remote.EntryPoint;
 import br.com.testmaster.system.remote.OfferService;
@@ -30,45 +29,35 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-//Params Progress Result
 
-public class GetOffersTask {
+public class GetOfferDetail {
 
-    Context mContext;
-
-    public GetOffersTask(Context mContext) {
-        this.mContext = mContext;
-    }
-
-    public GetOffersTask() {
-    }
-
-    public class Task extends AsyncTask<Void, Void, OfferWrapper> {
+    public class Task extends AsyncTask<Links, Void, OfferDetail> {
 
         public AsyncResponse delegate = null;
-        OfferWrapper offerW;
+        OfferDetail detail;
 
         @Override
-        protected OfferWrapper doInBackground(Void... entryPoints) {
-
+        protected OfferDetail doInBackground(Links... linkses) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(EntryPoint.URl_BASE)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            try {
+            try{
                 OfferService service = retrofit.create(OfferService.class);
-                Call<OfferWrapper> requestOffers = service.listOffers();
-                Response<OfferWrapper> response = requestOffers.execute();
-                offerW = response.body();
-            } catch (Exception e) {
+                Call<OfferDetail> requestDetails = service.getDetail(linkses[0].getSelf().getHref());
+                Response<OfferDetail> response = requestDetails.execute();
+                detail = response.body();
+            }catch (Exception e){
                 e.printStackTrace();
             }
-            return offerW;
+            return detail;
         }
+
         @Override
-        protected void onPostExecute(OfferWrapper offerWrapper) {
-            super.onPostExecute(offerWrapper);
-            delegate.processFinish(offerWrapper);
+        protected void onPostExecute(OfferDetail offerDetail) {
+            super.onPostExecute(offerDetail);
+            delegate.processFinish(offerDetail);
         }
     }
 }

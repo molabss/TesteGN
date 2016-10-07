@@ -55,4 +55,14 @@ public  abstract class Detail {
     public void set_embedded(Embedded _embedded) {
         this._embedded = _embedded;
     }
+
+    @Override
+    public String toString() {
+        return "Detail{" +
+                "distance='" + distance + '\'' +
+                ", lead_price=" + lead_price +
+                ", title='" + title + '\'' +
+                ", _embedded=" + _embedded +
+                '}';
+    }
 }

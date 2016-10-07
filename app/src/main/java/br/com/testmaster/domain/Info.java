@@ -16,21 +16,54 @@
 
 package br.com.testmaster.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 
-public class Info {
+public class Info implements Parcelable {
 
     private String label;
-    private List<String> value;
+    //private List<String> value;
 
     public Info() {
     }
 
     public Info(String label, List<String> value) {
         this.label = label;
-        this.value = value;
+        //this.value = value;
     }
+
+    //---------------------------------------------------------------------------------------------
+    protected Info(Parcel in) {
+        label = in.readString();
+        //value = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(label);
+        //dest.writeStringList(value);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Info> CREATOR = new Creator<Info>() {
+        @Override
+        public Info createFromParcel(Parcel in) {
+            return new Info(in);
+        }
+
+        @Override
+        public Info[] newArray(int size) {
+            return new Info[size];
+        }
+    };
+    //---------------------------------------------------------------------------------------------
 
     public String getLabel() {
         return label;
@@ -40,11 +73,11 @@ public class Info {
         this.label = label;
     }
 
-    public List<String> getValue() {
-        return value;
-    }
+    //public List<String> getValue() {
+    //return value;
+    //}
 
-    public void setValue(List<String> value) {
-        this.value = value;
-    }
+    //public void setValue(List<String> value) {
+    //this.value = value;
+    //}
 }

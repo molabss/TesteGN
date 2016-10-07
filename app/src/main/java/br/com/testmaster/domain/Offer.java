@@ -16,7 +16,10 @@
 
 package br.com.testmaster.domain;
 
-public class Offer {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Offer implements Parcelable{
 
     private String state;
     private Embedded _embedded;
@@ -31,6 +34,39 @@ public class Offer {
         this._embedded = _embedded;
         this._links = _links;
     }
+
+    //--------------------------------------------------------------------------------------------
+    protected Offer(Parcel in) {
+        state = in.readString();
+        _embedded = in.readParcelable(Embedded.class.getClassLoader());
+        _links = in.readParcelable(Links.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(state);
+        dest.writeParcelable(_embedded, flags);
+        dest.writeParcelable(_links, flags);
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Offer> CREATOR = new Creator<Offer>() {
+        @Override
+        public Offer createFromParcel(Parcel in) {
+            return new Offer(in);
+        }
+
+        @Override
+        public Offer[] newArray(int size) {
+            return new Offer[size];
+        }
+    };
+    //--------------------------------------------------------------------------------------------
 
     public String getState() {
         return state;
@@ -54,5 +90,14 @@ public class Offer {
 
     public void set_links(Links _links) {
         this._links = _links;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "state='" + state + '\'' +
+                ", _embedded=" + _embedded +
+                ", _links=" + _links +
+                '}';
     }
 }

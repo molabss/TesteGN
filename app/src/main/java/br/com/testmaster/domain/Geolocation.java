@@ -16,32 +16,56 @@
 
 package br.com.testmaster.domain;
 
-public class Geolocation {
 
-    private String latitude;
-    private String longitude;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public Geolocation() {
+public class Geolocation implements Parcelable {
+
+    private Double latitude;
+    private Double longitude;
+
+    protected Geolocation(Parcel in) {
+        latitude = in.readDouble();
+        longitude = in.readDouble();
     }
 
-    public Geolocation(String latitude, String longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
     }
 
-    public String getLatitude() {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Geolocation> CREATOR = new Creator<Geolocation>() {
+        @Override
+        public Geolocation createFromParcel(Parcel in) {
+            return new Geolocation(in);
+        }
+
+        @Override
+        public Geolocation[] newArray(int size) {
+            return new Geolocation[size];
+        }
+    };
+
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }

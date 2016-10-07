@@ -16,24 +16,64 @@
 
 package br.com.testmaster.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Embedded {
+public class Embedded implements Parcelable{
 
     private Address address;
     private User user;
     private Request request;
-    private Info info;
+    //private Info info;
+    private List<Info> info;
     private List<Phone> phones;
 
     public Embedded() {
     }
 
-    public Embedded(Address address, User user, Request request) {
+    public Embedded(Address address, User user, Request request, List<Info> info, List<Phone> phones) {
         this.address = address;
         this.user = user;
         this.request = request;
+        this.info = info;
+        this.phones = phones;
     }
+
+    protected Embedded(Parcel in) {
+        address = in.readParcelable(Address.class.getClassLoader());
+        user = in.readParcelable(User.class.getClassLoader());
+        request = in.readParcelable(Request.class.getClassLoader());
+        info = in.createTypedArrayList(Info.CREATOR);
+        phones = in.createTypedArrayList(Phone.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(address, flags);
+        dest.writeParcelable(user, flags);
+        dest.writeParcelable(request, flags);
+        dest.writeTypedList(info);
+        dest.writeTypedList(phones);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Embedded> CREATOR = new Creator<Embedded>() {
+        @Override
+        public Embedded createFromParcel(Parcel in) {
+            return new Embedded(in);
+        }
+
+        @Override
+        public Embedded[] newArray(int size) {
+            return new Embedded[size];
+        }
+    };
 
     public Address getAddress() {
         return address;
@@ -59,13 +99,13 @@ public class Embedded {
         this.request = request;
     }
 
-    public Info getInfo() {
-        return info;
-    }
+    //public Info getInfo() {
+        //return info;
+    //}
 
-    public void setInfo(Info info) {
-        this.info = info;
-    }
+    //public void setInfo(Info info) {
+        //this.info = info;
+    //}
 
     public List<Phone> getPhones() {
         return phones;

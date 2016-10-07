@@ -16,9 +16,40 @@
 
 package br.com.testmaster.domain;
 
-public class Reject {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Reject implements Parcelable{
 
     private String href;
+
+    protected Reject(Parcel in) {
+        href = in.readString();
+    }
+
+    //--------------------------------------------------------------------------------------------
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(href);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Reject> CREATOR = new Creator<Reject>() {
+        @Override
+        public Reject createFromParcel(Parcel in) {
+            return new Reject(in);
+        }
+
+        @Override
+        public Reject[] newArray(int size) {
+            return new Reject[size];
+        }
+    };
+    //--------------------------------------------------------------------------------------------
 
     public String getHref() {
         return href;

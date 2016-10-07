@@ -16,7 +16,10 @@
 
 package br.com.testmaster.domain;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable{
 
 
     public User() {
@@ -32,6 +35,38 @@ public class User {
     private String name;
     private String email;
     private Embedded _embedded;
+
+    //------------------------------------------------------------------------------------------------
+    protected User(Parcel in) {
+        name = in.readString();
+        email = in.readString();
+        _embedded = in.readParcelable(Embedded.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeParcelable(_embedded, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+    //------------------------------------------------------------------------------------------------
 
     public Embedded get_embedded() {
         return _embedded;
