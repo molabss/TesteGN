@@ -17,6 +17,7 @@
 package br.com.testmaster.view.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,8 @@ import br.com.testmaster.R;
 import br.com.testmaster.domain.OfferWrapper;
 import br.com.testmaster.system.remote.AsyncResponse;
 import br.com.testmaster.system.remote.task.GetOffersTask;
+import br.com.testmaster.view.OfferDetailActivity;
+import br.com.testmaster.view.RecyclerItemClickListener;
 import br.com.testmaster.view.adapter.OffersAdapter;
 
 /**
@@ -73,6 +76,16 @@ public class Offers extends Fragment implements SwipeRefreshLayout.OnRefreshList
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mSwipeRefreshLayout.setRefreshing(false);
+
+        mRecyclerView.addOnItemTouchListener(
+            new RecyclerItemClickListener(this.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    startActivity(new Intent(Offers.this.getContext(),OfferDetailActivity.class));
+                    //startActivity(new Intent(SendMoneyActivity.this,ValuePopupActivity.class).putExtra("contact",contactList.get(position)));
+                }
+            })
+        );
     }
 
     @Override
