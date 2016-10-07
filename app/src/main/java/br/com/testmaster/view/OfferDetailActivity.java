@@ -28,6 +28,7 @@ import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
@@ -46,7 +47,7 @@ import br.com.testmaster.system.remote.task.GetOfferDetail;
 public class OfferDetailActivity extends AppCompatActivity implements OnMapReadyCallback, AsyncResponse {
 
     MapView mapView;
-    private GoogleMap mMap;
+    GoogleMap mMap;
     Offer offer;
     OfferDetail detail;
 
@@ -70,6 +71,13 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         mapView.getMapAsync(this);
     }
 
+
+
+
+
+
+
+
     @Override
     public void processFinish(Object output) {
         detail = (OfferDetail)output;
@@ -84,24 +92,24 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         uiSet.setZoomControlsEnabled(true);
         uiSet.setZoomGesturesEnabled(true);
 
-        Geolocation local = detail.get_embedded().getAddress().getGeolocation();
+        Geolocation local;
+        if(detail == null){
+            return;
+        } else {
+            local = detail.get_embedded().getAddress().getGeolocation();
+        }
 
         LatLng latLon = new LatLng(local.getLatitude(), local.getLongitude());
-        //mMap.addMarker(new MarkerOptions().position(saoPaulo));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(saoPaulo));
-
         mMap.addCircle(new CircleOptions()
                 .center(latLon)
                 .radius(30)
                 .strokeColor(Color.BLUE)
                 .strokeWidth(2f)
-                .fillColor(Color.argb(1, 0, 255, 2))
+                .fillColor(Color.argb(1, 0, 0, 255))
                 .center(latLon)
             );
-
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLon));
         mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
-
     }
 
 }
