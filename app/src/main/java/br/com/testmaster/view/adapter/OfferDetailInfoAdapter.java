@@ -75,9 +75,9 @@ public class OfferDetailInfoAdapter  extends RecyclerView.Adapter<OfferDetailInf
     public void onBindViewHolder(OfferDetailInfoViewHolder holder, int position) {
 
         if("unread".equals(state)){
-            holder.statusCircle.setBackgroundResource(R.drawable.shape_gray);
+            holder.statusCircle.setBackgroundResource(R.mipmap.info_gray);
         }else{
-            holder.statusCircle.setBackgroundResource(R.drawable.shape_blue);
+            holder.statusCircle.setBackgroundResource(R.mipmap.info_green);
         }
 
         holder.label.setText(offerDetail.get_embedded().getInfo().get(position).getLabel());

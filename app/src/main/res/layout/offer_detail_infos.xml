@@ -11,8 +11,8 @@
         android:paddingBottom="0dp"
         card_view:cardBackgroundColor="@color/WHITE"
         card_view:cardCornerRadius="0dp"
-        card_view:cardElevation="3dp"
-        card_view:contentPadding="3dp">
+        card_view:cardElevation="0dp"
+        card_view:contentPadding="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,12 +28,12 @@
 
                 <View
                     android:id="@+id/statusCircle"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/shape_gray" />
+                    android:background="@mipmap/info_blue" />
 
                 <TextView
                     android:id="@+id/label"
@@ -59,7 +59,7 @@
                     android:layout_marginLeft="24dp"
                     android:gravity="center_vertical"
                     android:text="Coffeee break"
-                    android:textColor="@color/BLACK"
+                    android:textColor="@color/md_grey_600"
                     android:textSize="10sp" />
 
 

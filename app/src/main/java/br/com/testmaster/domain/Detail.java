@@ -28,6 +28,10 @@ public  abstract class Detail {
         return distance;
     }
 
+    public Integer getIntDistance() {
+        return Integer.parseInt(distance);
+    }
+
     public void setDistance(String distance) {
         this.distance = distance;
     }

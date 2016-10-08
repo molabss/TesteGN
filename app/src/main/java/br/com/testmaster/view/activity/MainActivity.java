@@ -1,4 +1,20 @@
-package br.com.testmaster.view;
+/*
+ * Copyright (c) 2016 by Moisés Santana.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+package br.com.testmaster.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,8 +32,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import br.com.testmaster.R;
-import br.com.testmaster.view.fragments.Leads;
-import br.com.testmaster.view.fragments.Offers;
+import br.com.testmaster.view.fragment.LeadsFragment;
+import br.com.testmaster.view.fragment.OffersFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,15 +69,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabLayout.addTab(tabLayout.newTab().setCustomView(tabOffer));
         tabLayout.addTab(tabLayout.newTab().setCustomView(tabLead));
         //replace default fragment
-        replaceFragment(new Offers());
+        replaceFragment(new OffersFragment());
         //handling tab click event
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    replaceFragment(new Offers());
+                    replaceFragment(new OffersFragment());
                 } else if (tab.getPosition() == 1) {
-                    replaceFragment(new Leads());
+                    replaceFragment(new LeadsFragment());
                 }
             }
             @Override

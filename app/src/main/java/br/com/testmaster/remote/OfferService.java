@@ -1,4 +1,4 @@
-package br.com.testmaster.system.remote;
+package br.com.testmaster.remote;
 
 import br.com.testmaster.domain.OfferDetail;
 import br.com.testmaster.domain.OfferWrapper;

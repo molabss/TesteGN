@@ -12,8 +12,8 @@
     <string name="title_activity_offer_detail">OfferDetailActivity</string>
 
 
-
     <string name="reject">RECUSAR</string>
     <string name="accept">ACEITAR</string>
+    <string name="title_activity_lead_detail">LeadDetailActivity</string>
 
 </resources>

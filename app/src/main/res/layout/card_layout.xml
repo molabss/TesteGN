@@ -34,9 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/item_title"
-            android:layout_centerHorizontal="true"
-            android:text="----------------------------------------------------------"
-            android:textSize="10sp" />
+            android:maxLines="1"
+            android:text="---------------------------------------------"
+            android:textColor="@color/md_grey_400" />
 
 
         <TextView

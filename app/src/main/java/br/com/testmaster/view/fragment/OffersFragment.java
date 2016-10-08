@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package br.com.testmaster.view.fragments;
+package br.com.testmaster.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,16 +30,16 @@ import android.view.ViewGroup;
 
 import br.com.testmaster.R;
 import br.com.testmaster.domain.OfferWrapper;
-import br.com.testmaster.system.remote.AsyncResponse;
-import br.com.testmaster.system.remote.task.GetOffersTask;
-import br.com.testmaster.view.OfferDetailActivity;
-import br.com.testmaster.view.RecyclerItemClickListener;
+import br.com.testmaster.remote.AsyncResponse;
+import br.com.testmaster.remote.task.GetOffersTask;
+import br.com.testmaster.view.activity.OfferDetailActivity;
+import br.com.testmaster.view.listener.RecyclerItemClickListener;
 import br.com.testmaster.view.adapter.OffersAdapter;
 
 /**
  *
  */
-public class Offers extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AsyncResponse {
+public class OffersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AsyncResponse {
 
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
@@ -47,7 +47,7 @@ public class Offers extends Fragment implements SwipeRefreshLayout.OnRefreshList
     OfferWrapper offerWrp;
     OffersAdapter offerAdapter;
 
-    public Offers() {
+    public OffersFragment() {
     }
 
     @Override

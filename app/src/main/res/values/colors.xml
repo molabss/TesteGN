@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0097F6</color>
+    <color name="colorPrimary">#0098F9</color>
     <color name="colorPrimaryDark">#125688</color>
     <color name="textColorPrimary">#FFFFFF</color>
-    <color name="windowBackground">#00B8FF</color>
+    <color name="windowBackground">#00BDFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#c8e8ff</color>
 
@@ -23,6 +23,8 @@
     <color name="CYANO">#00BCD4</color>
     <color name="ORANGE">#FF9800</color>
     <color name="LARANJA_FELIPE">#eb3c00</color>
+
+    <color name="blue_contact_client_box">#4EC6FE</color>
 
 
     <!--Material Design Colours - Moises 29-05-2015 -->

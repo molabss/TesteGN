@@ -14,9 +14,8 @@
  *  limitations under the License.
  */
 
-package br.com.testmaster.system.remote;
+package br.com.testmaster.remote;
 
-public class EntryPoint {
-    public static final String URl_BASE = "https://testemobile.getninjas.com.br/";
-    public Links _links;
+
+public interface LeadService {
 }

@@ -14,9 +14,30 @@
  *  limitations under the License.
  */
 
-package br.com.testmaster.system.remote;
+package br.com.testmaster.system;
 
-public interface AsyncResponse {
+import android.app.Application;
 
-    void processFinish(Object output);
+/**
+ * Created by casa on 08/10/2016.
+ */
+
+public class AppInit extends Application{
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
+
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
 }

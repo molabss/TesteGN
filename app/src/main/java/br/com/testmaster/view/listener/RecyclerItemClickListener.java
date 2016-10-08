@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package br.com.testmaster.view;
+package br.com.testmaster.view.listener;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
