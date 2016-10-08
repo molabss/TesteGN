@@ -22,12 +22,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,6 +47,7 @@ import br.com.testmaster.domain.Offer;
 import br.com.testmaster.domain.OfferDetail;
 import br.com.testmaster.system.remote.AsyncResponse;
 import br.com.testmaster.system.remote.task.GetOfferDetail;
+import br.com.testmaster.view.adapter.OfferDetailInfoAdapter;
 
 public class OfferDetailActivity extends AppCompatActivity implements OnMapReadyCallback, AsyncResponse {
 
@@ -50,6 +55,9 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
     GoogleMap mMap;
     Offer offer;
     OfferDetail detail;
+    String state;
+    OfferDetailInfoAdapter offInfoAdapter;
+    RecyclerView rvListInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +68,13 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        rvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
+        rvListInfo.setLayoutManager(new LinearLayoutManager(this));
+
         offer = (Offer) getIntent().getParcelableExtra("offer");
+        state = getIntent().getStringExtra("state");
 
         GetOfferDetail.Task task = new GetOfferDetail().new Task();
         task.delegate = this;
@@ -71,26 +85,21 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         mapView.getMapAsync(this);
     }
 
-
-
-
-
-
-
-
     @Override
     public void processFinish(Object output) {
         detail = (OfferDetail)output;
+        rvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
+        rvListInfo.setLayoutManager(new LinearLayoutManager(this));
+        offInfoAdapter = new OfferDetailInfoAdapter(detail,state);
+        rvListInfo.setAdapter(offInfoAdapter);
+        rvListInfo.setItemAnimator(new DefaultItemAnimator());
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        UiSettings uiSet = mMap.getUiSettings();
-        uiSet.setZoomControlsEnabled(true);
-        uiSet.setZoomGesturesEnabled(true);
 
         Geolocation local;
         if(detail == null){
@@ -110,6 +119,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
             );
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLon));
         mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
+        mapView.invalidate();
     }
-
 }

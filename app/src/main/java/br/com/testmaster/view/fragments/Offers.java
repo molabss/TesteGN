@@ -81,7 +81,9 @@ public class Offers extends Fragment implements SwipeRefreshLayout.OnRefreshList
             new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    startActivity(new Intent(getActivity(),OfferDetailActivity.class).putExtra("offer",offerWrp.getOffers().get(position)));
+                    startActivity(new Intent(getActivity(),OfferDetailActivity.class)
+                            .putExtra("offer",offerWrp.getOffers().get(position))
+                            .putExtra("state",offerWrp.getOffers().get(position).getState()));
                 }
             })
         );

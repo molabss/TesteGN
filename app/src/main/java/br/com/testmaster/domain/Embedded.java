@@ -107,6 +107,15 @@ public class Embedded implements Parcelable{
         //this.info = info;
     //}
 
+
+    public List<Info> getInfo() {
+        return info;
+    }
+
+    public void setInfo(List<Info> info) {
+        this.info = info;
+    }
+
     public List<Phone> getPhones() {
         return phones;
     }
