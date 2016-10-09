@@ -29,7 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class GetOfferDetail {
+public class GetOfferDetailTask {
 
     public class Task extends AsyncTask<Links, Void, OfferDetail> {
 

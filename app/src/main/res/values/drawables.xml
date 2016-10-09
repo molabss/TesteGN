@@ -6,4 +6,7 @@
     <item name="ic_menu_share" type="drawable">@android:drawable/ic_menu_share</item>
     <item name="ic_menu_send" type="drawable">@android:drawable/ic_menu_send</item>
 
+    <item name="ic_menu_disponiveis" type="drawable">@drawable/ic_basket</item>
+    <item name="ic_menu_aceitos" type="drawable">@drawable/ic_check</item>
+
 </resources>

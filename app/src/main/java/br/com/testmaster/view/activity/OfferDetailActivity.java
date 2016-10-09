@@ -40,7 +40,7 @@ import br.com.testmaster.domain.Geolocation;
 import br.com.testmaster.domain.Offer;
 import br.com.testmaster.domain.OfferDetail;
 import br.com.testmaster.remote.AsyncResponse;
-import br.com.testmaster.remote.task.GetOfferDetail;
+import br.com.testmaster.remote.task.GetOfferDetailTask;
 import br.com.testmaster.view.adapter.OfferDetailInfoAdapter;
 
 public class OfferDetailActivity extends AppCompatActivity implements OnMapReadyCallback, AsyncResponse {
@@ -93,7 +93,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         mOffer = (Offer) getIntent().getParcelableExtra("offer");
         mState = getIntent().getStringExtra("state");
 
-        GetOfferDetail.Task task = new GetOfferDetail().new Task();
+        GetOfferDetailTask.Task task = new GetOfferDetailTask().new Task();
         task.delegate = this;
         task.execute(mOffer.get_links());
 

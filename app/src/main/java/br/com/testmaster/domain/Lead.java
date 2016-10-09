@@ -19,6 +19,11 @@ package br.com.testmaster.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class Lead implements Parcelable{
 
     private String created_at;
@@ -65,6 +70,24 @@ public class Lead implements Parcelable{
         }
     };
     //----------------------------------------------------------------------------------------------
+
+
+    public String getFrtCreated_at() {
+
+        Locale local = new Locale("pt","BR");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat output = new SimpleDateFormat("dd 'de' MMM",local);
+        Date d = null;
+        try {
+            d = sdf.parse(created_at);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String formattedTime = output.format(d);
+        return formattedTime;
+    }
+
+
 
     public String getCreated_at() {
         return created_at;

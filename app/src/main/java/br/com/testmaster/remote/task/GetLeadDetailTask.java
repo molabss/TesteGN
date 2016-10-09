@@ -14,23 +14,11 @@
  *  limitations under the License.
  */
 
-package br.com.testmaster.remote;
+package br.com.testmaster.remote.task;
 
+/**
+ * Created by casa on 09/10/2016.
+ */
 
-import br.com.testmaster.domain.LeadDetail;
-import br.com.testmaster.domain.LeadWrapper;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
-
-public interface LeadService {
-
-
-    @GET("leads")
-    Call<LeadWrapper> listLeads();
-
-
-    @GET
-    Call<LeadDetail>getDetail(@Url String url);
-
+public class GetLeadDetailTask {
 }
