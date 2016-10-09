@@ -78,8 +78,8 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         mTitle=(TextView)findViewById(R.id.title);
         mUser=(TextView)findViewById(R.id.user);
         mDistanceDesc=(TextView)findViewById(R.id.distanceDesc);
-        mPhone=(TextView)findViewById(R.id.phone);
         mEmail=(TextView)findViewById(R.id.email);
+        mPhone=(TextView)findViewById(R.id.phone);
         mBtnAccept=(Button)findViewById(R.id.btnAccept);
         mBtnReject=(Button)findViewById(R.id.btnReject);
         mUserIconView=findViewById(R.id.userIconView);
