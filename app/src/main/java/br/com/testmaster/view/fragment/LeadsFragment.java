@@ -46,10 +46,8 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             task.execute();
     }
 
-
     @Override
     public void processFinish(Object output) {
-
             mLeadWrp = (LeadWrapper) output;
             mLeadAdapter = new LeadsAdapter(mLeadWrp);
             mRecyclerView.setAdapter(mLeadAdapter);
@@ -63,11 +61,9 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     public void onItemClick(View view, int position) {
                         startActivity(new Intent(getActivity(),LeadDetailActivity.class)
                                 .putExtra("lead",mLeadWrp.getLeads().get(position)));
-                                //.putExtra("state",offerWrp.getOffers().get(position).getState()));
                     }
                 })
             );
-
     }
 
     @Override
@@ -89,7 +85,6 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -101,6 +96,4 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onRefresh() {
 
     }
-
-
 }

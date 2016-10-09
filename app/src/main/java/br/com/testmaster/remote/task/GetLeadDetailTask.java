@@ -16,9 +16,47 @@
 
 package br.com.testmaster.remote.task;
 
-/**
- * Created by casa on 09/10/2016.
- */
+import android.os.AsyncTask;
+
+import br.com.testmaster.domain.LeadDetail;
+import br.com.testmaster.domain.Links;
+import br.com.testmaster.remote.AsyncResponse;
+import br.com.testmaster.remote.EntryPoint;
+import br.com.testmaster.remote.LeadService;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class GetLeadDetailTask {
+
+    public class Task extends AsyncTask<Links, Void, LeadDetail> {
+
+        public AsyncResponse delegate = null;
+        LeadDetail detail;
+
+        @Override
+        protected LeadDetail doInBackground(Links... linkses) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(EntryPoint.URl_BASE)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            try{
+                LeadService service = retrofit.create(LeadService.class);
+                Call<LeadDetail> requestDetails = service.getDetail(linkses[0].getSelf().getHref());
+                Response<LeadDetail> response = requestDetails.execute();
+                detail = response.body();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return detail;
+        }
+
+        @Override
+        protected void onPostExecute(LeadDetail leadDetail) {
+            super.onPostExecute(leadDetail);
+            this.delegate.processFinish(leadDetail);
+        }
+    }
 }
