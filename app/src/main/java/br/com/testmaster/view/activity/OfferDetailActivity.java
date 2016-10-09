@@ -111,11 +111,11 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
 
     void fillViews (){
         if("unread".equals(mState)){
+            mUserIconView.setBackgroundResource(R.mipmap.account_blue);
+            mAddressIconView.setBackgroundResource(R.mipmap.map_blue);
+        }else{
             mUserIconView.setBackgroundResource(R.mipmap.account_gray);
             mAddressIconView.setBackgroundResource(R.mipmap.map_gray);
-        }else{
-            mUserIconView.setBackgroundResource(R.mipmap.account_green);
-            mAddressIconView.setBackgroundResource(R.mipmap.map_green);
         }
         Address ad = mDetail.get_embedded().getAddress();
         mTitle.setText(mDetail.getTitle());
@@ -184,6 +184,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
     @Override
     protected void onResume() {
         super.onResume();
-        mMapView.onResume();
+        mMapView.invalidate();
+        //mMapView.onResume();
     }
 }

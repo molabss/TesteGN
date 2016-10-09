@@ -11,6 +11,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_offer_detail">OfferDetailActivity</string>
 
+    <string name="client_contact">Contato do Cliente</string>
+    <string name="contact_lock_alert">Aceite o pedido para destravar o contato!</string>
+
+    <string name="wait">Aguarde...</string>
 
     <string name="reject">RECUSAR</string>
     <string name="accept">ACEITAR</string>

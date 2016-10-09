@@ -85,7 +85,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:text="Buffet-Completo-Cofee-break"
+                                android:text="@string/wait"
                                 android:textColor="@color/BLACK"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
@@ -139,14 +139,14 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginTop="2dp"
-                                android:background="@mipmap/account_blue" />
+                                android:background="@mipmap/wait" />
 
                             <TextView
                                 android:id="@+id/user"
                                 android:layout_width="match_parent"
                                 android:layout_height="33dp"
                                 android:gravity="center_vertical"
-                                android:text="Buffet 2"
+                                android:text="@string/wait"
                                 android:textColor="@color/BLACK"
                                 android:textSize="12sp" />
 
@@ -166,7 +166,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginTop="2dp"
-                                android:background="@mipmap/map_blue" />
+                                android:background="@mipmap/wait" />
 
 
                             <LinearLayout
@@ -179,7 +179,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="15dp"
                                     android:gravity="center_vertical"
-                                    android:text="Vila Leopoldina - São Paulo"
+                                    android:text="@string/wait"
                                     android:textColor="@color/BLACK"
                                     android:textSize="12sp" />
 
@@ -190,7 +190,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="0dp"
                                     android:gravity="center_vertical"
-                                    android:text="a 10 km de você"
+                                    android:text="@string/wait"
                                     android:textColor="@color/md_grey_600"
                                     android:textSize="10sp" />
 
@@ -245,7 +245,7 @@
                     android:gravity="center_vertical"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
-                    android:text="Contato do Cliente"
+                    android:text="@string/client_contact"
                     android:textColor="@color/WHITE"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -258,7 +258,7 @@
                     android:gravity="center_vertical"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
-                    android:text="(11)7777.888888"
+                    android:text="@string/wait"
                     android:textColor="@color/WHITE"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -272,7 +272,7 @@
                     android:gravity="center_vertical"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
-                    android:text="b********@gmail.com"
+                    android:text="@string/wait"
                     android:textColor="@color/WHITE"
                     android:textSize="15dp"
                     android:textStyle="bold" />
