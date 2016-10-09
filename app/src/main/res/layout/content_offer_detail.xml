@@ -241,64 +241,14 @@
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="3dp"
-                    android:background="@color/blue_contact_client_box"
-                    android:orientation="vertical"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="3dp">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/client_contact"
-                        android:textColor="@color/WHITE"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/ic_lock"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/wait"
-                        android:textColor="@color/WHITE"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/ic_lock"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/wait"
-                        android:textColor="@color/WHITE"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+                <include layout="@layout/client_contact_part_lock"></include>
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_horizontal|center_vertical"
-                    android:text="Aceite o pedido para destravar o contato!"
+                    android:text="@string/contact_lock_alert"
                     android:textColor="@color/BLACK"
                     android:textSize="15sp"
                     android:textStyle="italic|bold" />

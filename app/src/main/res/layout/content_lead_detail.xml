@@ -248,7 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_horizontal|center_vertical"
-                    android:text="Fale com o cliente o quanto antes"
+                    android:text="@string/contact_client_ready"
                     android:textColor="@color/BLACK"
                     android:textSize="15sp"
                     android:textStyle="italic|bold" />

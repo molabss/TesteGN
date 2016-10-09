@@ -13,6 +13,7 @@
 
     <string name="client_contact">Contato do Cliente</string>
     <string name="contact_lock_alert">Aceite o pedido para destravar o contato!</string>
+    <string name="contact_client_ready">Fale com o cliente o quanto antes</string>
 
     <string name="wait">Aguarde...</string>
 

@@ -16,10 +16,13 @@
 
 package br.com.testmaster.view.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,19 +82,19 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        mTitle=(TextView)findViewById(R.id.title);
-        mUser=(TextView)findViewById(R.id.user);
-        mDistanceDesc=(TextView)findViewById(R.id.distanceDesc);
-        mEmail=(TextView)findViewById(R.id.email);
-        mPhone=(TextView)findViewById(R.id.phone);
-        mBtnCallPhone=(Button)findViewById(R.id.btnCallPhone);
-        mBtnWzp=(Button)findViewById(R.id.btnWzp);
-        mUserIconView=findViewById(R.id.userIconView);
-        mAddressIconView=findViewById(R.id.addressIconView);
-        mNeighborhoodCity=(TextView) findViewById(R.id.neighborhoodCity);
+        mTitle = (TextView) findViewById(R.id.title);
+        mUser = (TextView) findViewById(R.id.user);
+        mDistanceDesc = (TextView) findViewById(R.id.distanceDesc);
+        mEmail = (TextView) findViewById(R.id.email);
+        mPhone = (TextView) findViewById(R.id.phone);
+        mBtnCallPhone = (Button) findViewById(R.id.btnCallPhone);
+        mBtnWzp = (Button) findViewById(R.id.btnWzp);
+        mUserIconView = findViewById(R.id.userIconView);
+        mAddressIconView = findViewById(R.id.addressIconView);
+        mNeighborhoodCity = (TextView) findViewById(R.id.neighborhoodCity);
 
 
-        mRvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
+        mRvListInfo = (RecyclerView) findViewById(R.id.rvListInfo);
         mRvListInfo.setLayoutManager(new LinearLayoutManager(this));
 
         mLead = (Lead) getIntent().getParcelableExtra("lead");
@@ -106,49 +109,45 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
         mMapView.getMapAsync(this);
     }
 
-
     @Override
     public void processFinish(Object output) {
-        mDetail = (LeadDetail)output;
+        mDetail = (LeadDetail) output;
         fillViews();
     }
 
-
-    void fillViews (){
+    void fillViews() {
 
         mToolbar.setTitle(mDetail.get_embedded().getUser().getName());
-
         mUserIconView.setBackgroundResource(R.mipmap.account_green);
         mAddressIconView.setBackgroundResource(R.mipmap.map_green);
-
         Address ad = mDetail.get_embedded().getAddress();
         mTitle.setText(mDetail.getTitle());
         mUser.setText(mDetail.get_embedded().getUser().getName());
-        mNeighborhoodCity.setText(ad.getNeighborhood()+" - "+ad.getCity());
-        mDistanceDesc.setText("a "+mDetail.getIntDistance() / 1000+"Km de você");
+        mNeighborhoodCity.setText(ad.getNeighborhood() + " - " + ad.getCity());
+        mDistanceDesc.setText("a " + mDetail.getIntDistance() / 1000 + "Km de você");
         mPhone.setText(mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber());
         mEmail.setText(mDetail.get_embedded().getUser().getEmail());
-
 
         mBtnCallPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //mDetail.get_links().getAccept();
-
-                //startActivity
+                Uri uri = Uri.parse("tel:"+mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber());
+                Intent intent = new Intent(Intent.ACTION_DIAL,uri);
+                startActivity(intent);
             }
         });
         mBtnWzp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //mDetail.get_links().getReject();
-
-                ///startActivity
+                Intent sendIntent = new Intent();
+                sendIntent.setPackage("com.whatsapp");
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, mDetail.get_embedded().getUser().getName()
+                        +" "+ mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber());
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
             }
         });
-
 
         mRvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
         mRvListInfo.setLayoutManager(new LinearLayoutManager(this));
@@ -186,7 +185,7 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onResume() {
         super.onResume();
-        mMapView.invalidate();
+        //mMapView.invalidate();
         //mMapView.onResume();
     }
 
