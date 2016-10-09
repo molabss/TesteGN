@@ -99,7 +99,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OffersView
         Address ad = mOffer.get_embedded().getRequest().get_embedded().getAddress();
         holder.mItem_title.setText(mOffer.get_embedded().getRequest().getTitle());
         holder.mUser.setText(mOffer.get_embedded().getRequest().get_embedded().getUser().getName());
-        holder.mCreated_at.setText(mOffer.get_embedded().getRequest().getCreated_at());
+        holder.mCreated_at.setText(mOffer.get_embedded().getRequest().getFrtCreated_at());
         holder.mLocal.setText(ad.getNeighborhood() + " - " + ad.getCity());
     }
 
