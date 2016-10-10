@@ -96,7 +96,7 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
      * Obtém os dados do Lead via webservice.
      */
     void callWebService(){
-        GetOfferDetailTask.Task task = new GetOfferDetailTask().new Task();
+        GetOfferDetailTask.Task task = new GetOfferDetailTask(OfferDetailActivity.this).new Task();
         task.delegate = this;
         task.execute(mOffer.get_links());
     }
@@ -187,13 +187,10 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
             );
         mMMap.moveCamera(CameraUpdateFactory.newLatLng(latLon));
         mMMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
-        //mapView.invalidate();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mMapView.invalidate();
-        //mMapView.onResume();
     }
 }

@@ -52,17 +52,6 @@ public class OfferDetailInfoAdapter  extends RecyclerView.Adapter<OfferDetailInf
         this.state = state;
     }
 
-    /*
-    *
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_layout, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(v);
-        return viewHolder;
-    }
-    * */
-
-
     @Override
     public OfferDetailInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_detail_infos,parent,false);
@@ -80,6 +69,9 @@ public class OfferDetailInfoAdapter  extends RecyclerView.Adapter<OfferDetailInf
             holder.statusCircle.setBackgroundResource(R.mipmap.info_gray);
         }
         holder.label.setText(offerDetail.get_embedded().getInfo().get(position).getLabel());
+
+        //Não é possível deserializar o atributo value do json, pois ele é ao mesmo tempo array e string
+        holder.value.setText(R.string.nd);
     }
 
     @Override

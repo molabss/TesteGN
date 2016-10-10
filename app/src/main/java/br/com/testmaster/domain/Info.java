@@ -19,6 +19,8 @@ package br.com.testmaster.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.util.List;
 
 
@@ -30,21 +32,14 @@ public class Info implements Parcelable {
     public Info() {
     }
 
-    public Info(String label, List<String> value) {
-        this.label = label;
-        //this.value = value;
-    }
 
-    //---------------------------------------------------------------------------------------------
     protected Info(Parcel in) {
         label = in.readString();
-        //value = in.createStringArrayList();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(label);
-        //dest.writeStringList(value);
     }
 
     @Override
@@ -63,7 +58,6 @@ public class Info implements Parcelable {
             return new Info[size];
         }
     };
-    //---------------------------------------------------------------------------------------------
 
     public String getLabel() {
         return label;
@@ -73,11 +67,5 @@ public class Info implements Parcelable {
         this.label = label;
     }
 
-    //public List<String> getValue() {
-    //return value;
-    //}
 
-    //public void setValue(List<String> value) {
-    //this.value = value;
-    //}
 }

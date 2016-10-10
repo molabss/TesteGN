@@ -17,6 +17,8 @@
 package br.com.testmaster.view.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -49,6 +51,7 @@ import br.com.testmaster.domain.Links;
 import br.com.testmaster.domain.Self;
 import br.com.testmaster.remote.AsyncResponse;
 import br.com.testmaster.remote.task.GetLeadDetailTask;
+import br.com.testmaster.util.CallApp;
 import br.com.testmaster.view.adapter.LeadDetailInfoAdapter;
 
 public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyCallback, AsyncResponse {
@@ -104,7 +107,7 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
      * Obtém os dados do Lead via webservice.
      */
     void callWebService(){
-        GetLeadDetailTask.Task task = new GetLeadDetailTask().new Task();
+        GetLeadDetailTask.Task task = new GetLeadDetailTask(LeadDetailActivity.this).new Task();
         task.delegate = this;
         task.execute(mLead.get_links());
     }
@@ -149,21 +152,29 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
         mBtnCallPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse("tel:"+mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber());
-                Intent intent = new Intent(Intent.ACTION_DIAL,uri);
-                startActivity(intent);
+                    CallApp.dialPhone(mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber(),LeadDetailActivity.this);
             }
         });
         mBtnWzp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sendIntent = new Intent();
-                sendIntent.setPackage("com.whatsapp");
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, mDetail.get_embedded().getUser().getName()
-                        +" "+ mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber());
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
+                String text = mDetail.get_embedded().getUser().getName()
+                        +" "+ mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber();
+
+                boolean ok = CallApp.shareWithWhatsApp(text,LeadDetailActivity.this);
+
+                if(!ok){
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(LeadDetailActivity.this);
+                    dialog.setMessage(R.string.wzp_not_available);
+                    dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface di, int arg) {
+                            di.dismiss();
+                        }
+                    });
+                    dialog.setTitle(LeadDetailActivity.this.getResources().getString(R.string.warning));
+                    dialog.show();
+                }
+
             }
         });
         mRvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
@@ -196,7 +207,6 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
         );
         mMMap.moveCamera(CameraUpdateFactory.newLatLng(latLon));
         mMMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
-        //mapView.invalidate();
     }
 
     @Override
@@ -208,8 +218,6 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onResume() {
         super.onResume();
-        //mMapView.invalidate();
-        //mMapView.onResume();
     }
 
 }

@@ -24,8 +24,10 @@
     <string name="errorGetLeads">Não Foi possível obter a lista de Pedidos</string>
     <string name="errorGetLeadDetails">Não Foi possível obter os detalhes do Pedido</string>
     <string name="errorInternetConnect">Seu dispositivo não está conectado à internet</string>
+    <string name="nd">N/D</string>
 
-
+    <string name="wzppack">com.whatsapp</string>
+    <string name="wzp_not_available">O WhatsApp não foi encontrado no dispositivo</string>
     <string name="empty_data">Informações indisponíveis</string>
 
 </resources>

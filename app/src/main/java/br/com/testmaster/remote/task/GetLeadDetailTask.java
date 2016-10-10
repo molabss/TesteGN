@@ -16,25 +16,45 @@
 
 package br.com.testmaster.remote.task;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
+import br.com.testmaster.R;
 import br.com.testmaster.domain.LeadDetail;
 import br.com.testmaster.domain.Links;
 import br.com.testmaster.remote.AsyncResponse;
 import br.com.testmaster.remote.EntryPoint;
 import br.com.testmaster.remote.LeadService;
+import br.com.testmaster.remote.Task;
+import br.com.testmaster.util.Network;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class GetLeadDetailTask {
+public class GetLeadDetailTask extends Task {
+
+    public GetLeadDetailTask(Context mContext) {
+        super(mContext);
+    }
 
     public class Task extends AsyncTask<Links, Void, LeadDetail> {
 
         public AsyncResponse delegate = null;
         LeadDetail detail;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            limpaErroHist();
+            clearMsg();
+            if(Network.isNetworkUnavailable(getContext())){
+                setMsg(getContext().getResources().getString(R.string.errorInternetConnect));
+                erroOcorreu();
+                cancel(true);
+            }
+        }
 
         @Override
         protected LeadDetail doInBackground(Links... linkses) {
@@ -49,6 +69,8 @@ public class GetLeadDetailTask {
                 detail = response.body();
             }catch (Exception e){
                 e.printStackTrace();
+                erroOcorreu();
+                setMsg(getContext().getResources().getString(R.string.errorGetLeadDetails));
             }
             return detail;
         }
@@ -56,7 +78,16 @@ public class GetLeadDetailTask {
         @Override
         protected void onPostExecute(LeadDetail leadDetail) {
             super.onPostExecute(leadDetail);
+            if(teveAlgumErro()){
+                alert();
+            }
             this.delegate.processFinish(leadDetail);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            onPostExecute(null);
         }
     }
 }

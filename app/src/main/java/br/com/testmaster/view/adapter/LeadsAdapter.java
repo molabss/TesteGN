@@ -40,8 +40,6 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsViewHol
     private Lead mLead;
 
 
-
-
     public static class LeadsViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mItem_title;
@@ -63,14 +61,6 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsViewHol
             mDataIconView = itemView.findViewById(R.id.dataIconView);
             mLocalIconView = itemView.findViewById(R.id.localIconView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Click detected on item " + getAdapterPosition(),
-                            Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
         }
     }
 

@@ -68,6 +68,10 @@ public class LeadDetailInfoAdapter extends RecyclerView.Adapter<LeadDetailInfoAd
     public void onBindViewHolder(LeadDetailInfoViewHolder holder, int position) {
         holder.statusCircle.setBackgroundResource(R.mipmap.info_green);
         holder.label.setText(leadDetail.get_embedded().getInfo().get(position).getLabel());
+
+        //Não é possível deserializar o atributo value do json, pois ele é ao mesmo tempo array e string
+        holder.value.setText(R.string.nd);
+
     }
 
     @Override
