@@ -16,6 +16,7 @@
 
 package br.com.testmaster.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -129,19 +130,17 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         mBtnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                mDetail.get_links().getAccept();
-
-                //startActivity
+                startActivity(new Intent(getBaseContext(),LeadDetailActivity.class)
+                        .putExtra("offer_accepted",mDetail.get_links().getAccept()));
+                finish();
             }
         });
         mBtnReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                mDetail.get_links().getReject();
-
-                ///startActivity
+                finish();
+                //startActivity(new Intent(getBaseContext(),LeadDetailActivity.class)
+                        //.putExtra("offer_rejected",mDetail.get_links().getReject()));
             }
         });
 

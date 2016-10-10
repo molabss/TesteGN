@@ -85,16 +85,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+
+
+
     }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_main, fragment);
+        //transaction.addToBackStack(null);
+
+
+        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                if(getFragmentManager().getBackStackEntryCount() == 0) finish();
+            }
+        });
+
+
         transaction.commit();
     }
 //-------------------------------------------------------------------------
-
 
 
     @Override
@@ -104,7 +117,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+
+
+                int count = getFragmentManager().getBackStackEntryCount();
+
+                if (count == 0) {
+                    super.onBackPressed();
+                    //additional code
+                } else {
+                    getFragmentManager().popBackStack();
+                }
+
+            }
+
+
     }
 
     @Override
@@ -136,9 +162,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.mipmap.ic_basket) {
-            // Handle the camera action
+            replaceFragment(new OffersFragment());
         } else if (id == R.mipmap.ic_check) {
-
+            replaceFragment(new LeadsFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

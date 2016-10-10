@@ -39,6 +39,10 @@ public class Lead implements Parcelable{
         this._links = _links;
     }
 
+    public Lead(Links _links) {
+        this._links = _links;
+    }
+
     //----------------------------------------------------------------------------------------------
     protected Lead(Parcel in) {
         created_at = in.readString();

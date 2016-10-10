@@ -40,10 +40,13 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 import br.com.testmaster.R;
+import br.com.testmaster.domain.Accept;
 import br.com.testmaster.domain.Address;
 import br.com.testmaster.domain.Geolocation;
 import br.com.testmaster.domain.Lead;
 import br.com.testmaster.domain.LeadDetail;
+import br.com.testmaster.domain.Links;
+import br.com.testmaster.domain.Self;
 import br.com.testmaster.remote.AsyncResponse;
 import br.com.testmaster.remote.task.GetLeadDetailTask;
 import br.com.testmaster.view.adapter.LeadDetailInfoAdapter;
@@ -57,7 +60,6 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
     private String mState;
     private LeadDetailInfoAdapter mLeaInfoAdapter;
     private RecyclerView mRvListInfo;
-
     private TextView mTitle;
     private TextView mUser;
     private TextView mDistanceDesc;
@@ -69,19 +71,17 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
     private View mAddressIconView;
     private TextView mNeighborhoodCity;
     private Toolbar mToolbar;
-
+    private Accept mAccept;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lead_detail);
         mToolbar = (Toolbar) findViewById(R.id.toolbar3);
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
+        processIntentRequest();
         mTitle = (TextView) findViewById(R.id.title);
         mUser = (TextView) findViewById(R.id.user);
         mDistanceDesc = (TextView) findViewById(R.id.distanceDesc);
@@ -92,31 +92,49 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
         mUserIconView = findViewById(R.id.userIconView);
         mAddressIconView = findViewById(R.id.addressIconView);
         mNeighborhoodCity = (TextView) findViewById(R.id.neighborhoodCity);
-
-
         mRvListInfo = (RecyclerView) findViewById(R.id.rvListInfo);
         mRvListInfo.setLayoutManager(new LinearLayoutManager(this));
-
-        mLead = (Lead) getIntent().getParcelableExtra("lead");
-        mState = getIntent().getStringExtra("state");
-
-        GetLeadDetailTask.Task task = new GetLeadDetailTask().new Task();
-        task.delegate = this;
-        task.execute(mLead.get_links());
-
+        callWebService();
         mMapView = (MapView) findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
     }
 
+    /**
+     * Obtém os dados do Lead via webservice.
+     */
+    void callWebService(){
+        GetLeadDetailTask.Task task = new GetLeadDetailTask().new Task();
+        task.delegate = this;
+        task.execute(mLead.get_links());
+    }
+
+    /**
+     *Obtêm objetos vindos via Intent. Se objeto Lead estiver nulo
+     * então significa que uma oferta foi aceita e obtem a URI da Intent
+     * para processar o seu carregamento via webservice.
+     */
+    void processIntentRequest(){
+        mLead = (Lead) getIntent().getParcelableExtra("lead");
+        if(mLead == null){
+            mAccept = getIntent().getParcelableExtra("offer_accepted");
+            mLead = new Lead(new Links(new Self(mAccept.getHref())));
+        }
+    }
+
+    /**
+     *Recupera objeto retornado via webservice e processa carregamento das views.
+     */
     @Override
     public void processFinish(Object output) {
         mDetail = (LeadDetail) output;
         fillViews();
     }
 
+    /**
+     *Preenche as views com os dados retornados.
+     */
     void fillViews() {
-
         mToolbar.setTitle(mDetail.get_embedded().getUser().getName());
         mUserIconView.setBackgroundResource(R.mipmap.account_green);
         mAddressIconView.setBackgroundResource(R.mipmap.map_green);
@@ -148,7 +166,6 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
                 startActivity(sendIntent);
             }
         });
-
         mRvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
         mRvListInfo.setLayoutManager(new LinearLayoutManager(this));
         mLeaInfoAdapter = new LeadDetailInfoAdapter(mDetail);
@@ -180,6 +197,12 @@ public class LeadDetailActivity extends AppCompatActivity implements OnMapReadyC
         mMMap.moveCamera(CameraUpdateFactory.newLatLng(latLon));
         mMMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
         //mapView.invalidate();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 
     @Override

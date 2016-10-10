@@ -38,6 +38,7 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadRemoteData();
+
     }
 
     public void loadRemoteData(){
@@ -74,6 +75,7 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
+
         return rootView;
     }
 
@@ -96,4 +98,6 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onRefresh() {
 
     }
+
+
 }

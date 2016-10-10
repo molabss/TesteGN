@@ -26,6 +26,33 @@ public class Links implements Parcelable{
     private Accept accept;
     private Reject reject;
 
+    public Links() {
+    }
+
+    public Links(Accept accept, Reject reject, Self self) {
+        this.accept = accept;
+        this.reject = reject;
+        this.self = self;
+    }
+
+    public Links(Accept accept, Reject reject) {
+        this.accept = accept;
+        this.reject = reject;
+    }
+
+    public Links(Accept accept) {
+        this.accept = accept;
+    }
+
+    public Links(Reject reject) {
+        this.reject = reject;
+    }
+
+    public Links(Self self) {
+        this.self = self;
+    }
+
+
     //------------------------------------------------------------------------------------------
     protected Links(Parcel in) {
         self = in.readParcelable(Self.class.getClassLoader());
@@ -74,12 +101,6 @@ public class Links implements Parcelable{
         this.reject = reject;
     }
 
-    public Links() {
-    }
-
-    public Links(Self self) {
-        this.self = self;
-    }
 
     public Self getSelf() {
         return self;
