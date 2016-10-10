@@ -1,24 +1,31 @@
 <resources>
     <string name="app_name">GetNinjas Offers</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="navigation_drawer_open">Abre navigation drawer</string>
+    <string name="navigation_drawer_close">Fecha navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_offer_detail">OfferDetailActivity</string>
-
+    <string name="you_distance_label">Km de você</string>
+    <string name="offer_detail_title">Ofertas</string>
+    <string name="main_activity_title">Pedidos</string>
     <string name="client_contact">Contato do Cliente</string>
     <string name="contact_lock_alert">Aceite o pedido para destravar o contato!</string>
     <string name="contact_client_ready">Fale com o cliente o quanto antes</string>
-
     <string name="wait">Aguarde...</string>
-
     <string name="reject">RECUSAR</string>
     <string name="accept">ACEITAR</string>
     <string name="title_activity_lead_detail">LeadDetailActivity</string>
+
+    <string name="warning">Atenção</string>
+    <string name="errorGetOffers">Não Foi possível obter a lista de Ofertas</string>
+    <string name="errorGetOffersDetails">Não Foi possível obter os detalhes da oferta</string>
+    <string name="errorGetLeads">Não Foi possível obter a lista de Pedidos</string>
+    <string name="errorGetLeadDetails">Não Foi possível obter os detalhes do Pedido</string>
+    <string name="errorInternetConnect">Seu dispositivo não está conectado à internet</string>
+
+
+    <string name="empty_data">Informações indisponíveis</string>
 
 </resources>

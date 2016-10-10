@@ -14,36 +14,22 @@
  *  limitations under the License.
  */
 
-package br.com.testmaster.system;
+package br.com.testmaster.util;
 
-import android.app.Application;
+
 import android.content.Context;
-import android.support.multidex.MultiDexApplication;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
-/**
- * Created by casa on 08/10/2016.
- */
+import br.com.testmaster.system.AppInit;
 
-public class AppInit extends MultiDexApplication{
+public class Network {
 
-    public static Context CONTEXT;
-
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        CONTEXT = getApplicationContext();
+    public static boolean isNetworkUnavailable(Context mContext) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager)
+                        mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return !(activeNetworkInfo != null && activeNetworkInfo.isConnected());
     }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
-
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-    }
-
 }

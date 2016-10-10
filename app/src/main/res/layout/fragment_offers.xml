@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
+    android:id="@+id/parentLay"
     tools:context="br.com.testmaster.view.fragment.OffersFragment">
+
+    <include layout="@layout/empty_data_part"></include>
 
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeContainer"

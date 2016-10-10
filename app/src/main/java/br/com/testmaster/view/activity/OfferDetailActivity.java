@@ -53,7 +53,6 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
     private String mState;
     private OfferDetailInfoAdapter mOffInfoAdapter;
     private RecyclerView mRvListInfo;
-
     private TextView mTitle;
     private TextView mUser;
     private TextView mDistanceDesc;
@@ -70,12 +69,10 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        toolbar.setTitle("Oferta");
+        toolbar.setTitle(getResources().getString(R.string.offer_detail_title));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
         mTitle=(TextView)findViewById(R.id.title);
         mUser=(TextView)findViewById(R.id.user);
         mDistanceDesc=(TextView)findViewById(R.id.distanceDesc);
@@ -86,30 +83,45 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         mUserIconView=findViewById(R.id.userIconView);
         mAddressIconView=findViewById(R.id.addressIconView);
         mNeighborhoodCity=(TextView) findViewById(R.id.neighborhoodCity);
-
-
         mRvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
         mRvListInfo.setLayoutManager(new LinearLayoutManager(this));
-
-        mOffer = (Offer) getIntent().getParcelableExtra("offer");
-        mState = getIntent().getStringExtra("state");
-
-        GetOfferDetailTask.Task task = new GetOfferDetailTask().new Task();
-        task.delegate = this;
-        task.execute(mOffer.get_links());
-
+        processIntentRequest();
+        callWebService();
         mMapView = (MapView) findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
     }
 
+    /**
+     * Obtém os dados do Lead via webservice.
+     */
+    void callWebService(){
+        GetOfferDetailTask.Task task = new GetOfferDetailTask().new Task();
+        task.delegate = this;
+        task.execute(mOffer.get_links());
+    }
+
+    /**
+     * Obtêm objetos vindos via Intent. Objeto Offer com todos os seus detalhes
+     * e o estado desta Offer que pode ser read e unread.
+     */
+    void processIntentRequest(){
+        mOffer = (Offer) getIntent().getParcelableExtra("offer");
+        mState = getIntent().getStringExtra("state");
+    }
+
+    /**
+     *Recupera objeto retornado via webservice e processa carregamento das views.
+     */
     @Override
     public void processFinish(Object output) {
         mDetail = (OfferDetail)output;
         fillViews();
     }
 
-
+    /**
+     *Preenche as views com os dados retornados.
+     */
     void fillViews (){
         if("unread".equals(mState)){
             mUserIconView.setBackgroundResource(R.mipmap.account_blue);
@@ -122,11 +134,18 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
         mTitle.setText(mDetail.getTitle());
         mUser.setText(mDetail.get_embedded().getUser().getName());
         mNeighborhoodCity.setText(ad.getNeighborhood()+" - "+ad.getCity());
-        mDistanceDesc.setText("a "+mDetail.getIntDistance() / 1000+"Km de você");
+        mDistanceDesc.setText("a "+mDetail.getIntDistance() / 1000+getResources().getString(R.string.you_distance_label));
         mPhone.setText(mDetail.get_embedded().getUser().get_embedded().getPhones().get(0).getNumber());
         mEmail.setText(mDetail.get_embedded().getUser().getEmail());
+        mRvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
+        mRvListInfo.setLayoutManager(new LinearLayoutManager(this));
+        mOffInfoAdapter = new OfferDetailInfoAdapter(mDetail,mState);
+        mRvListInfo.setAdapter(mOffInfoAdapter);
+        mRvListInfo.setItemAnimator(new DefaultItemAnimator());
 
-
+        /**
+         * Carrega a Oferta recém aceita como um novo Lead
+         */
         mBtnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,37 +154,28 @@ public class OfferDetailActivity extends AppCompatActivity implements OnMapReady
                 finish();
             }
         });
+
+        /**
+         * Retorna para a lista de Offers
+         */
         mBtnReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
-                //startActivity(new Intent(getBaseContext(),LeadDetailActivity.class)
-                        //.putExtra("offer_rejected",mDetail.get_links().getReject()));
             }
         });
-
-
-        mRvListInfo = (RecyclerView)findViewById(R.id.rvListInfo);
-        mRvListInfo.setLayoutManager(new LinearLayoutManager(this));
-        mOffInfoAdapter = new OfferDetailInfoAdapter(mDetail,mState);
-        mRvListInfo.setAdapter(mOffInfoAdapter);
-        mRvListInfo.setItemAnimator(new DefaultItemAnimator());
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         mMMap = googleMap;
         mMMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
         Geolocation local;
         if(mDetail == null){
             return;
         } else {
             local = mDetail.get_embedded().getAddress().getGeolocation();
         }
-
         LatLng latLon = new LatLng(local.getLatitude(), local.getLongitude());
         mMMap.addCircle(new CircleOptions()
                 .center(latLon)

@@ -24,9 +24,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import br.com.testmaster.R;
 import br.com.testmaster.domain.OfferWrapper;
@@ -60,7 +63,7 @@ public class OffersFragment extends Fragment implements SwipeRefreshLayout.OnRef
      *
      */
     public void loadRemoteData(){
-        GetOffersTask.Task task = new GetOffersTask().new Task();
+        GetOffersTask.Task task = new GetOffersTask(getActivity()).new Task();
         task.delegate = this;
         task.execute();
     }
@@ -70,6 +73,16 @@ public class OffersFragment extends Fragment implements SwipeRefreshLayout.OnRef
      */
     @Override
     public void processFinish(Object output) {
+
+        LinearLayout emptyLay = (LinearLayout)getView().findViewById(R.id.emptyMessageLay);
+
+        if(output == null){
+            emptyLay.setVisibility(View.VISIBLE);
+            return;
+        }else{
+            emptyLay.setVisibility(View.GONE);
+        }
+
         offerWrp = (OfferWrapper) output;
         offerAdapter = new OffersAdapter(offerWrp);
         mRecyclerView.setAdapter(offerAdapter);

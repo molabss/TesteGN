@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import br.com.testmaster.R;
 import br.com.testmaster.domain.LeadWrapper;
@@ -38,33 +39,44 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadRemoteData();
-
     }
 
     public void loadRemoteData(){
-            GetLeadsTask.Task task = new GetLeadsTask().new Task();
+            GetLeadsTask.Task task = new GetLeadsTask(getActivity()).new Task();
             task.delegate = this;
             task.execute();
     }
 
+
+
     @Override
     public void processFinish(Object output) {
-            mLeadWrp = (LeadWrapper) output;
-            mLeadAdapter = new LeadsAdapter(mLeadWrp);
-            mRecyclerView.setAdapter(mLeadAdapter);
-            mLayoutManager = new LinearLayoutManager(getActivity());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mSwipeRefreshLayout.setRefreshing(false);
 
-            mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        startActivity(new Intent(getActivity(),LeadDetailActivity.class)
-                                .putExtra("lead",mLeadWrp.getLeads().get(position)));
-                    }
-                })
-            );
+        LinearLayout emptyLay = (LinearLayout)getView().findViewById(R.id.emptyMessageLay);
+
+        if(output == null){
+            emptyLay.setVisibility(View.VISIBLE);
+            return;
+        }else{
+            emptyLay.setVisibility(View.GONE);
+        }
+
+        mLeadWrp = (LeadWrapper) output;
+        mLeadAdapter = new LeadsAdapter(mLeadWrp);
+        mRecyclerView.setAdapter(mLeadAdapter);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mSwipeRefreshLayout.setRefreshing(false);
+
+        mRecyclerView.addOnItemTouchListener(
+            new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    startActivity(new Intent(getActivity(),LeadDetailActivity.class)
+                            .putExtra("lead",mLeadWrp.getLeads().get(position)));
+                }
+            })
+        );
     }
 
     @Override
@@ -75,7 +87,6 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-
         return rootView;
     }
 
@@ -96,7 +107,7 @@ public class LeadsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
-
+        loadRemoteData();
     }
 
 

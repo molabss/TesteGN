@@ -19,10 +19,13 @@ package br.com.testmaster.remote.task;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import br.com.testmaster.R;
 import br.com.testmaster.domain.LeadWrapper;
 import br.com.testmaster.remote.AsyncResponse;
 import br.com.testmaster.remote.EntryPoint;
 import br.com.testmaster.remote.LeadService;
+import br.com.testmaster.remote.Task;
+import br.com.testmaster.util.Network;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -32,23 +35,32 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by casa on 09/10/2016.
  */
 
-public class GetLeadsTask {
-
-    Context mContext;
+public class GetLeadsTask extends Task {
 
 
     public GetLeadsTask(Context mContext) {
-        this.mContext = mContext;
+        super(mContext);
     }
 
-    public GetLeadsTask() {
-    }
+
 
     public class Task extends AsyncTask<Void, Void, LeadWrapper>{
 
         public AsyncResponse delegate = null;
         LeadWrapper leadW;
 
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            limpaErroHist();
+            clearMsg();
+            if(Network.isNetworkUnavailable(getContext())){
+                setMsg(getContext().getResources().getString(R.string.errorInternetConnect));
+                erroOcorreu();
+                cancel(true);
+            }
+        }
 
         @Override
         protected LeadWrapper doInBackground(Void... voids) {
@@ -64,8 +76,9 @@ public class GetLeadsTask {
                 leadW = response.body();
             } catch (Exception e) {
                 e.printStackTrace();
+                erroOcorreu();
+                setMsg(getContext().getResources().getString(R.string.errorGetLeads));
             }
-
             return leadW;
         }
 
@@ -73,7 +86,17 @@ public class GetLeadsTask {
         @Override
         protected void onPostExecute(LeadWrapper leadWrapper) {
             super.onPostExecute(leadWrapper);
+            if(teveAlgumErro()){
+                alert();
+            }
             delegate.processFinish(leadWrapper);
+        }
+
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            onPostExecute(null);
         }
 
     }

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Pedidos");
+        toolbar.setTitle(getResources().getString(R.string.main_activity_title));
         setSupportActionBar(toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,17 +85,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-
-
     }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_main, fragment);
-        //transaction.addToBackStack(null);
-
 
         fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -103,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(getFragmentManager().getBackStackEntryCount() == 0) finish();
             }
         });
-
-
         transaction.commit();
     }
 //-------------------------------------------------------------------------
@@ -117,20 +110,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-
-
-                int count = getFragmentManager().getBackStackEntryCount();
-
-                if (count == 0) {
-                    super.onBackPressed();
-                    //additional code
-                } else {
-                    getFragmentManager().popBackStack();
-                }
-
+            int count = getFragmentManager().getBackStackEntryCount();
+            if (count == 0) {
+                super.onBackPressed();
+            } else {
+                getFragmentManager().popBackStack();
             }
-
-
+        }
     }
 
     @Override
@@ -151,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
